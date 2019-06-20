@@ -20,6 +20,22 @@ public class TravelBusinessTests {
     @Autowired
     private TravelBusiness travelBusiness;
 
+    private List<HotelDTO> hotels;
+
+    /*
+    @Before
+    public void beforeTests() {
+        this.hotels = new ArrayList<HotelDTO>();
+        HotelDTO firstHotel = new HotelDTO();
+        firstHotel.setId(1);
+        firstHotel.setCityCode(123);
+        firstHotel.setName("First Hotel");
+        firstHotel.setRooms(new ArrayList<>().addAll());
+        this.hotels.add()
+    }
+    // TODO: Implementar testes
+    */
+
     @Test
     public void travelBusinessDefined() {
         assertThat(this.travelBusiness).isNotNull();
@@ -27,7 +43,7 @@ public class TravelBusinessTests {
 
     @Test(expected = TravelException.class)
     public void travelBusinessMustThrowErrorWithNullHotelsList() {
-        List<HotelDTO> hotels = null;
+        this.hotels = null;
         this.travelBusiness.getTravelInfoForHotels(hotels);
     }
 }
