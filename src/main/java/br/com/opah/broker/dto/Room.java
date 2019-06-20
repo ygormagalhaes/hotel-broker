@@ -1,6 +1,6 @@
 package br.com.opah.broker.dto;
 
-public class RoomDTO {
+public class Room {
 
     private int roomID;
     private String categoryName;

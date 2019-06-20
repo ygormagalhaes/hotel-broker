@@ -10,7 +10,8 @@ public class HotelDTO {
     private int id;
     private String name;
     private int cityCode;
-    private List<RoomDTO> rooms;
+    private String cityName;
+    private List<Room> rooms;
 
     public void setId(int id) {
         this.id = id;
@@ -36,11 +37,19 @@ public class HotelDTO {
         return cityCode;
     }
 
-    public List<RoomDTO> getRooms() {
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public List<Room> getRooms() {
         return rooms;
     }
 
-    public void setRooms(List<RoomDTO> rooms) {
+    public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
 

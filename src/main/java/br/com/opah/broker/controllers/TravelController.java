@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.opah.broker.dto.HotelDTO;
+import br.com.opah.broker.dto.TravelDTO;
 import br.com.opah.broker.services.TravelService;
 
 @RestController
@@ -21,7 +21,7 @@ public class TravelController {
     private TravelService travelService;
 
     @GetMapping // TODO: Customizar exceptions quando parâmetros não são informados
-    public List<HotelDTO> getTravelInfo(@RequestParam("cityCode") int cityCode,
+    public List<TravelDTO> getTravelInfo(@RequestParam("cityCode") int cityCode,
             @RequestParam("checkin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date checkin,
             @RequestParam("checkout") @DateTimeFormat(pattern = "yyyy-MM-dd") Date checkout,
             @RequestParam("totalAdults") int totalAdults, @RequestParam("totalChilds") int totalChilds) {

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.opah.broker.business.TravelBusiness;
 import br.com.opah.broker.connections.BrokerConnection;
 import br.com.opah.broker.dto.HotelDTO;
+import br.com.opah.broker.dto.TravelDTO;
 
 @Service
 public class TravelService {
@@ -19,9 +20,8 @@ public class TravelService {
     @Autowired
     private TravelBusiness travelBusinnes;
 
-    public List<HotelDTO> getHotels(int cityCode, Date checkin, Date checkout, int totalAdults, int totalChilds) {
+    public List<TravelDTO> getHotels(int cityCode, Date checkin, Date checkout, int totalAdults, int totalChilds) {
         List<HotelDTO> hotels = this.brokerConnection.getHotels(cityCode);
-        this.travelBusinnes.getTravelInfoForHotels(hotels);
-        return this.brokerConnection.getHotels(cityCode);
+        return this.travelBusinnes.getTravelInfoForHotels(hotels, checkin, checkout, totalAdults, totalChilds);
     }
 }
