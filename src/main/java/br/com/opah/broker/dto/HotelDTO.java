@@ -2,6 +2,9 @@ package br.com.opah.broker.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class HotelDTO {
 
     private int id;
@@ -39,6 +42,11 @@ public class HotelDTO {
 
     public void setRooms(List<RoomDTO> rooms) {
         this.rooms = rooms;
+    }
+
+    @Override
+    public String toString() {
+        return this.getName();
     }
 
 }
