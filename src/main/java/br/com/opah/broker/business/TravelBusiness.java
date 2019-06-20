@@ -44,10 +44,10 @@ public class TravelBusiness {
     }
 
     private BigDecimal getTotalPriceAdult(int totalAdults, long totalDays, BigDecimal adultPrice) {
-        return adultPrice.multiply(new BigDecimal(totalAdults * totalDays * .7));
+        return adultPrice.multiply(new BigDecimal(totalAdults * totalDays)).multiply(new BigDecimal(1.7));
     }
 
     private BigDecimal getTotalPriceChild(int totalChilds, long totalDays, BigDecimal childPrice) {
-        return childPrice.multiply(new BigDecimal(totalChilds * totalDays * .7));
+        return childPrice.multiply(new BigDecimal(totalChilds * totalDays)).multiply(new BigDecimal(1.7));
     }
 }
