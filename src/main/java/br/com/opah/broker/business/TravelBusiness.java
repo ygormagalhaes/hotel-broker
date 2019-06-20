@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 import br.com.opah.broker.dto.HotelDTO;
+import br.com.opah.broker.dto.PriceDetail;
 import br.com.opah.broker.dto.Room;
 import br.com.opah.broker.dto.TravelDTO;
 import br.com.opah.broker.dto.TravelRoom;
@@ -24,11 +25,14 @@ public class TravelBusiness {
             TravelDTO travel = new TravelDTO(hotel.getId(), hotel.getCityName());
 
             for (Room room : hotel.getRooms()) {
-                BigDecimal totalAdult = this.getTotalPriceAdult(totalAdults, totalDays, room.getPrice().getAdult());
-                BigDecimal totalChild = this.getTotalPriceChild(totalChilds, totalDays, room.getPrice().getChild());
+                BigDecimal totalPriceAdult = this.getTotalPricePerGuestType(totalAdults, totalDays, room.getPrice().getAdult());
+                BigDecimal totalPriceChild = this.getTotalPricePerGuestType(totalChilds, totalDays, room.getPrice().getChild());
 
                 TravelRoom travelRoom = new TravelRoom(room.getRoomID(), room.getCategoryName());
-                travelRoom.setTotalPrice(totalAdult.add(totalChild));
+                travelRoom.setTotalPrice(totalPriceAdult.add(totalPriceChild));
+                travelRoom.setPriceDetail(new PriceDetail(
+                    this.getPricePerDayGuestType(totalAdults, room.getPrice().getAdult()),
+                    this.getPricePerDayGuestType(totalChilds, room.getPrice().getChild())));
                 travel.getRooms().add(travelRoom);
             }
 
@@ -43,11 +47,11 @@ public class TravelBusiness {
             .atZone(ZoneId.systemDefault()), checkout.toInstant().atZone(ZoneId.systemDefault())).toDays();
     }
 
-    private BigDecimal getTotalPriceAdult(int totalAdults, long totalDays, BigDecimal adultPrice) {
-        return adultPrice.multiply(new BigDecimal(totalAdults * totalDays)).multiply(new BigDecimal(1.7));
+    private BigDecimal getPricePerDayGuestType(int totalGuests, BigDecimal guestTypePrice) {
+        return this.getTotalPricePerGuestType(totalGuests, 1, guestTypePrice);
     }
 
-    private BigDecimal getTotalPriceChild(int totalChilds, long totalDays, BigDecimal childPrice) {
-        return childPrice.multiply(new BigDecimal(totalChilds * totalDays)).multiply(new BigDecimal(1.7));
+    private BigDecimal getTotalPricePerGuestType(int totalGuests, long totalDays, BigDecimal guestTypePrice) {
+        return guestTypePrice.multiply(new BigDecimal(totalGuests * totalDays)).multiply(new BigDecimal(1.7));
     }
 }

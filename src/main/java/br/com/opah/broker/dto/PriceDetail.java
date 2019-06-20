@@ -7,6 +7,11 @@ public class PriceDetail {
     private BigDecimal pricePerDayAdult;
     private BigDecimal pricePerDayChild;
 
+    public PriceDetail(BigDecimal pricePerDayAdult, BigDecimal pricePerDayChild) {
+        this.pricePerDayAdult = pricePerDayAdult;
+        this.pricePerDayChild = pricePerDayChild;
+    }
+
     public void setPricePerDayAdult(BigDecimal pricePerDayAdult) {
         this.pricePerDayAdult = pricePerDayAdult;
     }
