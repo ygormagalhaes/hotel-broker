@@ -14,17 +14,18 @@ import br.com.opah.broker.dto.HotelDTO;
 import br.com.opah.broker.services.TravelService;
 
 @RestController
-@RequestMapping("/travels")
+@RequestMapping(value = "/travels")
 public class TravelController {
 
-    @Autowired()
+    @Autowired
     private TravelService travelService;
 
-    @GetMapping
+    @GetMapping // TODO: Customizar exceptions quando parâmetros não são informados
     public List<HotelDTO> getTravelInfo(@RequestParam("cityCode") int cityCode,
             @RequestParam("checkin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date checkin,
             @RequestParam("checkout") @DateTimeFormat(pattern = "yyyy-MM-dd") Date checkout,
             @RequestParam("totalAdults") int totalAdults, @RequestParam("totalChilds") int totalChilds) {
-        return this.travelService.getHotels();
+        return this.travelService.getHotels(cityCode, checkin, checkout, totalAdults, totalChilds);
     }
+
 }

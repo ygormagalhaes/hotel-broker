@@ -1,20 +1,27 @@
 package br.com.opah.broker.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.opah.broker.business.TravelBusiness;
 import br.com.opah.broker.connections.BrokerConnection;
 import br.com.opah.broker.dto.HotelDTO;
 
-@Service()
+@Service
 public class TravelService {
 
-    @Autowired()
+    @Autowired
     private BrokerConnection brokerConnection;
 
-    public List<HotelDTO> getHotels() {
-        return this.brokerConnection.getHotels(1);
+    @Autowired
+    private TravelBusiness travelBusinnes;
+
+    public List<HotelDTO> getHotels(int cityCode, Date checkin, Date checkout, int totalAdults, int totalChilds) {
+        List<HotelDTO> hotels = this.brokerConnection.getHotels(cityCode);
+        this.travelBusinnes.getTravelInfoForHotels(hotels);
+        return this.brokerConnection.getHotels(cityCode);
     }
 }
