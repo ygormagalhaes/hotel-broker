@@ -32,4 +32,23 @@ public class BrokerConnection {
         return responseEntity.getBody();
     }
 
+    public HotelDTO getHotel(int id) {
+        String apiUrl = this.env.getProperty("broker.api");
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(apiUrl)
+            .path(this.env.getProperty("broker.api.hotel.path"))
+            .path(Integer.toString(id));
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<List<HotelDTO>> responseEntity =
+            restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<List<HotelDTO>>() {
+            });
+
+        try {
+            HotelDTO hotel = responseEntity.getBody().get(0);
+            return hotel;
+        } catch (IndexOutOfBoundsException e) {
+            throw new RuntimeException("Nenhum hotel encontrado com o id informado");
+        }
+    }
+
 }
